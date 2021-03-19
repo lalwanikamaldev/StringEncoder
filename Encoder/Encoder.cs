@@ -47,7 +47,7 @@ namespace Encoder
         }
             catch (Exception)
             {
-                // handle the exception log it .
+                // handle the exception and log it .
 
             }
             return string.Empty;
