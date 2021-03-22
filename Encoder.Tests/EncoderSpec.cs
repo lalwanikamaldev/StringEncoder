@@ -2,6 +2,8 @@ using System;
 using Xunit;
 using System.Diagnostics;
 using Encoder;
+using encoder;
+using System.Collections.Generic;
 
 namespace Service.Tests
 {
@@ -16,8 +18,18 @@ namespace Service.Tests
     *****/
     public class EncoderSpec
     {
+        private readonly Dictionary<char, char> _letterDictinary = new Dictionary<char, char>()
+      {
+          {'a','1' },
+          { 'e','2' },
+          {'i','3' },
+          {'o','4' },
+          {'u','5' },
+          {'y',' ' },
+          {' ','y' }
+      };
         [Theory]
-        [InlineData("Hello World! 1234", "g2kk4yv4qkc!y4321")]
+        [InlineData("Hello World! 1234", "g2kk4yv4qkc!y4321" )]
         [InlineData("123B456", "321a654")]
         [InlineData("Have you tried turning it off and on again?", "g1u2y 45ysq32cys5qm3mfy3sy4eey1mcy4my1f13m?")]
         [InlineData("The quick brown fox jumps over the lazy dog", "sg2yp53bjyaq4vmye4wyi5lory4u2qysg2yk1y yc4f")]
@@ -28,7 +40,22 @@ namespace Service.Tests
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            Assert.Equal(expected, new EncoderProcessor().Encode(toEncode));
+            // Arrange
+            // this can be pass as test function input and that way we use maximum loosly couple 
+            Dictionary<char, char> _letterDictinary = new Dictionary<char, char>()
+      {
+          {'a','1' },
+          { 'e','2' },
+          {'i','3' },
+          {'o','4' },
+          {'u','5' },
+          {'y',' ' },
+          {' ','y' }
+      };
+      var myEncoderProcessor = new EncoderProcessor(_letterDictinary);
+
+        //execute
+        Assert.Equal(expected, myEncoderProcessor.Encode(toEncode));
             stopWatch.Stop();
             Console.WriteLine("Memory (MB): " + (GC.GetTotalMemory(false) * 0.000001) );
             Console.WriteLine("Runtime: " + stopWatch.ElapsedMilliseconds + "ms");
